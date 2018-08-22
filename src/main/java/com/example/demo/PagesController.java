@@ -141,7 +141,7 @@ public class PagesController {
 
         if (type.equalsIgnoreCase("rectangle")) {
             if (shape.getHeight() > 0 && shape.getWidth() > 0)
-                returnValue = String.format("Area of a %sX%s rectangle is %s", shape.getWidth(), shape.getHeight(), shape.getHeight() * shape.getWidth                                           ());
+                returnValue = String.format("Area of a %sX%s rectangle is %s", shape.getWidth(), shape.getHeight(), shape.getHeight() * shape.getWidth());
         }
         return returnValue;
     }

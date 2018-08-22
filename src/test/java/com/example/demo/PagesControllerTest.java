@@ -14,6 +14,8 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -34,7 +36,7 @@ public class PagesControllerTest {
 
 	@Test
 	public void testAdd() throws Exception {
-		RequestBuilder request = MockMvcRequestBuilders.get("/math/calculate/?operation=add&x=4&y=6");
+		RequestBuilder request = MockMvcRequestBuilders.get("/math/calculate?operation=add&x=4&y=6");
 		this.mvc.perform(request)
 			.andExpect((status().isOk()))
 			.andExpect(content().string("10"));
@@ -42,7 +44,7 @@ public class PagesControllerTest {
 
 	@Test
 	public void testAddAsDefault() throws Exception {
-		RequestBuilder request = MockMvcRequestBuilders.get("/math/calculate/?x=4&y=6");
+		RequestBuilder request = MockMvcRequestBuilders.get("/math/calculate?x=4&y=6");
 		this.mvc.perform(request)
 			.andExpect((status().isOk()))
 			.andExpect(content().string("10"));
@@ -58,7 +60,7 @@ public class PagesControllerTest {
 
 	@Test
 	public void testMultiply() throws Exception {
-		RequestBuilder request = MockMvcRequestBuilders.get("/math/calculate/?operation=multiply&x=4&y=6");
+		RequestBuilder request = MockMvcRequestBuilders.get("/math/calculate?operation=multiply&x=4&y=6");
 		this.mvc.perform(request)
 			.andExpect((status().isOk()))
 			.andExpect(content().string("24"));
@@ -66,7 +68,7 @@ public class PagesControllerTest {
 
 	@Test
 	public void testDivide() throws Exception {
-		RequestBuilder request = MockMvcRequestBuilders.get("/math/calculate/?operation=divide&x=9&y=3");
+		RequestBuilder request = MockMvcRequestBuilders.get("/math/calculate?operation=divide&x=9&y=3");
 		this.mvc.perform(request)
 			.andExpect((status().isOk()))
 			.andExpect(content().string("3"));
