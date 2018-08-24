@@ -1,8 +1,6 @@
 package com.example.demo;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -58,5 +56,15 @@ public class JSONResponseController {
         flight2.setTickets(Arrays.asList(ticket2));
 
         return Arrays.asList(flight1, flight2);
+    }
+
+    @PostMapping("/flights/tickets/total")
+    public int GetTicketTotal(@RequestBody Flight flight) {
+
+        int totalPrice = 0;
+        for (Flight.Ticket ticket: flight.getTickets()){
+            totalPrice += ticket.getPrice();
+        }
+        return totalPrice;
     }
 }
