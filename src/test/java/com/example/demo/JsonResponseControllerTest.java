@@ -35,8 +35,8 @@ public class JsonResponseControllerTest {
     public void testFlight() throws Exception {
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders.get("/json/flights/flight");
-        request.accept(MediaType.APPLICATION_JSON_UTF8);
-        request.contentType(MediaType.APPLICATION_JSON_UTF8);
+        //request.accept(MediaType.APPLICATION_JSON_UTF8);
+        //request.contentType(MediaType.APPLICATION_JSON_UTF8);
         this.mvc.perform(request)
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.Tickets[0].Passenger.FirstName", is("Kalyan")))
@@ -47,8 +47,8 @@ public class JsonResponseControllerTest {
     public void testFlights() throws Exception {
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders.get("/json/flights");
-        request.accept(MediaType.APPLICATION_JSON_UTF8);
-        request.contentType(MediaType.APPLICATION_JSON_UTF8);
+        //request.accept(MediaType.APPLICATION_JSON_UTF8);
+        //request.contentType(MediaType.APPLICATION_JSON_UTF8);
         this.mvc.perform(request)
             .andExpect(status().isOk())
             .andExpect(jsonPath("$", hasSize(2)))
