@@ -17,8 +17,10 @@ import java.util.Locale;
 
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsInstanceOf.instanceOf;
+import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -70,5 +72,30 @@ public class LessonControllerTest {
         this.mvc.perform(request)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id", equalTo(lesson.getId().intValue())));
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void testPatch() throws Exception{
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+
+        Lesson lesson = new Lesson();
+        lesson.setTitle("Colors");
+        lesson.setDeliveredOn(formatter.parse("2009-01-14"));
+        lesson = lessonRepository.save(lesson);
+
+        MockHttpServletRequestBuilder request = patch("/lessons/" + lesson.getId().toString())
+                                                .contentType(MediaType.APPLICATION_JSON)
+                                                .content("{\n" +
+                                                    "  \"title\": \"Spring Security\",\n" +
+                                                    "  \"deliveredOn\": \"2012-04-12\"\n" +
+                                                    "}");
+
+        this.mvc.perform(request)
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.title", is("Spring Security")))
+            .andExpect(jsonPath("$.deliveredOn", is("2012-04-12")));
     }
 }
