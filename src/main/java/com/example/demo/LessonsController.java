@@ -3,9 +3,7 @@ package com.example.demo;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/lessons")
@@ -51,6 +49,17 @@ public class LessonsController {
         }
         else
             return null;
+    }
+
+    @GetMapping("/find/{title}")
+    public Optional<Lesson> getByTitle(@PathVariable String title){
+        return this.repository.findByTitle(title);
+    }
+
+    @GetMapping("/between")
+    public List<Lesson> getByDeliveredOn(@RequestParam("date1") String date1, @RequestParam("date2") String date2) throws Exception{
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        return this.repository.findByDeliveredOnBetween(formatter.parse(date1), formatter.parse(date2));
     }
 
 }
